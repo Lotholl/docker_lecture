@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  parser:
+    build:
+      context: mai_parser
+    depends_on:
+      - postgres
+    ports:
+      - 5000:5000
+    environment:
+      - STDGRP=208
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_DB}
+  
+  postgres:
+    image: postgres
+
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_DB}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
